@@ -89,7 +89,7 @@ int main()
     char *OptionsGuestMode[] = {"Timed Test", "Challenge Mode"};
     char *OptionsChallenge[] = {"Random Words", "Quotes", "Paragraphs"};
     char *OptionsLogin[] = {"Start Typing", "Your Typing Stats", "Logout"}; // Logged-in menu options
-    char *OptionsType[] = {"Timed", "Random Words", "Quotes", "Paragraphs", "Lessons", "Your Commonly Mistyped Words"};
+    char *OptionsType[] = {"Timed", "Random Words", "Quotes", "Paragraphs", "Lessons"};
 
     while (1)
     {
@@ -120,7 +120,6 @@ int main()
                 switch (optionTyp)
                 {
                 case 1:
-                    // printf("timed");
                     start_timed_mode(user_index);
                     break;
                 case 2:
@@ -138,9 +137,6 @@ int main()
                 case 5:
                     printf("lessons");
                     break;
-                case 6:
-                    printf("your commonly mistyped words");
-                    break;
                 default:
                     break;
                 }
@@ -152,11 +148,11 @@ int main()
                 user_index = login_user();
                 if (user_index >= 0)
                 {
-                    printf("Login successful! Welcome, %s!\n", users[user_index].username);
+                    printf("%sLogin successful! Welcome, %s%s%s!%s\n", GREEN, COLOR_END, YELLOW, users[user_index].username, COLOR_END);
                 }
                 else
                 {
-                    printf("Login Failed! Incorrect username or password\n");
+                    printf("%sLogin Failed! Incorrect username or password%s\n", RED, COLOR_END);
                 }
             }
             else // View Stats option
@@ -171,7 +167,6 @@ int main()
                 switch (optionGuest)
                 {
                 case 1:
-                    // printf("timed");
                     start_timed_mode(user_index);
                     // run timed test
                     break;
@@ -202,13 +197,13 @@ int main()
             else // Logout option
             {
                 user_index = -1; // Reset user_index to indicate logout
-                printf("Logged out successfully!\n");
+                printf("%sLogged out successfully!%s\n", BLUE, COLOR_END);
             }
             break;
         case 4:
             if (user_index == -1) // Exit option
             {
-                printf("\nExiting program.\n");
+                printf("%s\nExiting program.%s\n", BLUE, COLOR_END);
                 return 0;
             }
             break;
@@ -228,11 +223,11 @@ void load_users_from_file()
         fread(&user_count, sizeof(int), 1, file);
         fread(users, sizeof(User), user_count, file);
         fclose(file);
-        printf("Users loaded from file successfully. Total users: %d\n", user_count); // Debug
+        // printf("Users loaded from file successfully. Total users: %d\n", user_count); // Debug
     }
     else
     {
-        printf("No existing user file found. Starting with 0 users.\n"); // Debug
+        // printf("No existing user file found. Starting with 0 users.\n"); // Debug
     }
 }
 // Save users to binary file
@@ -244,11 +239,11 @@ void save_users_to_file()
         fwrite(&user_count, sizeof(int), 1, file);
         fwrite(users, sizeof(User), user_count, file);
         fclose(file);
-        printf("Users saved to file successfully. Total users: %d\n", user_count); // Debug
+        // printf("Users saved to file successfully. Total users: %d\n", user_count); // Debug
     }
     else
     {
-        printf("Error saving users to file!\n"); // Debug
+        // printf("Error saving users to file!\n"); // Debug
     }
 }
 
@@ -257,18 +252,18 @@ void register_user()
 {
     if (user_count == MAX_USERS)
     {
-        printf("\nMaximum %d users are supported! No more registrations allowed!!!\n", MAX_USERS);
+        printf("\n%sMaximum %d users are supported! No more registrations allowed!!!%s\n", RED, MAX_USERS, COLOR_END);
         return;
     }
 
     char temp_username[CREDENTIAL_LENGTH];
     char temp_password[CREDENTIAL_LENGTH];
 
-    printf("\nRegister a new user");
+    printf("\n%sRegister a new user: %s\n", CYAN, COLOR_END);
 
     while (1)
     {
-        printf("\nEnter username: ");
+        printf("%s\nEnter username: %s", CYAN, COLOR_END);
         fgets(temp_username, CREDENTIAL_LENGTH, stdin);
         temp_username[strcspn(temp_username, "\n")] = '\0'; // Remove newline
 
@@ -278,7 +273,7 @@ void register_user()
             if (strcmp(temp_username, users[i].username) == 0)
             {
                 is_unique = 0;
-                printf("\nUsername already taken! Please choose another.\n");
+                printf("\n%sUsername already taken! Please choose another.%s\n", RED, COLOR_END);
                 break;
             }
         }
@@ -289,7 +284,7 @@ void register_user()
         }
     }
 
-    printf("Enter password (masking enabled): ");
+    printf("%sEnter password (masking enabled): %s", CYAN, COLOR_END);
     get_password(temp_password, CREDENTIAL_LENGTH);
 
     strcpy(users[user_count].username, temp_username);
@@ -301,8 +296,8 @@ void register_user()
     users[user_count].highest_accuracy = 0;
     user_count++;
 
-    save_users_to_file();                                           // Save updated users to file
-    printf("\nRegistration successful! User: %s\n", temp_username); // Debug
+    save_users_to_file(); // Save updated users to file
+    printf("%s\nRegistration successful! User: '%s'%s\n", GREEN, temp_username, COLOR_END);
 }
 // Login user
 int login_user()
@@ -310,30 +305,32 @@ int login_user()
     char username[CREDENTIAL_LENGTH];
     char password[CREDENTIAL_LENGTH];
 
+    printf("\n%sLogin: %s\n", CYAN, COLOR_END);
+
     input_credentials(username, password);
 
     for (int i = 0; i < user_count; i++)
     {
-        printf("Checking user: %s\n", users[i].username); // Debug
+        // printf("Checking user: %s\n", users[i].username); // Debug
         if (strcmp(username, users[i].username) == 0 && strcmp(password, users[i].password) == 0)
         {
-            printf("Login successful! User: %s\n", username); // Debug
+            // printf("Login successful! User: %s\n", username); // Debug
             return i;
         }
     }
 
-    printf("Login failed! User not found: %s\n", username); // Debug
+    // printf("Login failed! User not found: %s\n", username); // Debug
     return -1;
 }
 
 // Get user credentials
 void input_credentials(char *username, char *password)
 {
-    printf("\nEnter username: ");
+    printf("\n%sEnter username: %s", CYAN, COLOR_END);
     fgets(username, CREDENTIAL_LENGTH, stdin);
     username[strcspn(username, "\n")] = '\0'; // Remove newline
 
-    printf("Enter password (masking enabled): ");
+    printf("%sEnter password (masking enabled): %s", CYAN, COLOR_END);
     get_password(password, CREDENTIAL_LENGTH);
 }
 
@@ -373,7 +370,7 @@ void get_password(char *password, int maxLength)
 void setConsoleTitle()
 {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTitle("TYPEFAST.com");
+    SetConsoleTitle("TYPEFAST.cmd");
 }
 
 int getConsoleWidth()
@@ -608,13 +605,13 @@ void startTypingTest(char *text, int user_index)
         update_stats(users[user_index].username, WPM, accuracy);
     }
 
-    printf("\nTyping Complete!\n");
-    printf("Total Time: %.2f seconds\n", elapsedTime);
+    printf("\n%sTyping Complete!%s\n", BLUE, COLOR_END);
+    printf("TOTAL TIME: %.2f seconds\n", elapsedTime);
     printf("Words Per Minute (WPM): %.2f\n", WPM);
-    printf("Accuracy: %.2f%%\n", accuracy);
-    printf("Total Mistakes: %d\n", mistakes);
-
-    printf("Press Enter to Return to Main Menu");
+    printf("ACCURACY: %.2f%%\n", accuracy);
+    printf("MISTAKES: %d\n", mistakes);
+    printf("\n");
+    printf("%sPress Enter to Return to Main Menu: %s", CYAN, COLOR_END);
     getch();
     system("cls");
 }
@@ -694,12 +691,12 @@ void view_stats(const char *username)
         if (strcmp(user.username, username) == 0)
         {
             found = 1;
-            printf("\nStats for: %s\n", user.username);
-            printf("Tests Taken: %d\n", user.tests_taken);
-            printf("Average WPM: %.2f\n", user.avg_wpm);
-            printf("Highest WPM: %.2f\n", user.highest_wpm);
-            printf("Average Accuracy: %.2f%%\n", user.avg_accuracy);
-            printf("Highest Accuracy: %.2f%%\n", user.highest_accuracy);
+            printf("%s\nStats for: %s%s\n\n", BLUE, user.username, COLOR_END);
+            printf("TESTS TAKEN: %d\n", user.tests_taken);
+            printf("AVERAGE WPM: %.2f\n", user.avg_wpm);
+            printf("HIGHEST WPM: %s%.2f%s\n", GREEN, user.highest_wpm, COLOR_END);
+            printf("AVERAGE ACCURACY: %.2f%%\n", user.avg_accuracy);
+            printf("HIGHEST ACCURACY: %s%.2f%%%s\n", GREEN, user.highest_accuracy, COLOR_END);
             break;
         }
     }
@@ -749,6 +746,13 @@ void start_timed_mode(int user_index)
         if (_kbhit()) // Check if a key is pressed
         {
             char ch = _getch(); // Get the pressed key
+
+            // Handle ESC key
+            if (ch == 27) // ESC key pressed
+            {
+                system("cls");
+                return; // Go back to main menu
+            }
 
             // Handle Backspace
             if (ch == 8) // ASCII code for Backspace
@@ -803,9 +807,9 @@ void start_timed_mode(int user_index)
     setCursorPos(0, textLines + 2);                // Position results below the text
 
     // Display final results
-    printf("\nTime's Up!\n");
+    printf("\n%sTIMES'S UP!%s\n\n", BLUE, COLOR_END);
     printf("Words Per Minute (WPM): %.2f\n", WPM);
-    printf("Accuracy: %.2f%%\n", accuracy);
+    printf("ACCURACY: %.2f%%\n", accuracy);
     // printf("Total Mistakes: %d\n", mistakes);
 
     // Update user stats if logged in
@@ -814,7 +818,7 @@ void start_timed_mode(int user_index)
         update_stats(users[user_index].username, WPM, accuracy);
     }
 
-    printf("Press Enter to Return to Main Menu");
+    printf("\n%sPress Enter to Return to Main Menu: %s\n", CYAN, COLOR_END);
     while (_getch() != 13)
         ; // Wait for Enter key
     system("cls");
@@ -841,7 +845,7 @@ void showTimer(int timeLeft)
 {
     static int lastTimeLeft = -1; // Track last displayed time to reduce updates
 
-    if (timeLeft != lastTimeLeft)
+    if (timeLeft != (lastTimeLeft + 1))
     {
         // Move to the timer position (without affecting the cursor in the typing area)
         COORD cursorPos;
@@ -853,7 +857,7 @@ void showTimer(int timeLeft)
         // Update the timer at a fixed position (e.g., row 10)
         setCursorPos(0, 10); // Position timer at the bottom of the screen
         setColor(WHITE_T);
-        printf("Time Left: %2d seconds  ", timeLeft); // Use spaces to clear previous text
+        printf("%sTime Left: %2d seconds  %s", YELLOW, timeLeft, COLOR_END); // Use spaces to clear previous text
 
         // Restore the cursor to the typing area
         SetConsoleCursorPosition(hConsole, cursorPos);
