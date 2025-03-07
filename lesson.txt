@@ -1,0 +1,10 @@
+zzz xxx ccc vvv bbb
+fff jjj fff jjj aaa
+mmm nnn bbb vvv ccc
+qqq www eee rrr ttt
+uuu iii ooo ppp yyy
+qqq ooo ppp www eee
+hhh jjj kkk lll ;;;
+aaa sss ddd fff ggg
+sss lll ggg hhh jjj
+aaa ddd fff jjj kkk
