@@ -102,13 +102,13 @@
 
 ### Test Modes Guide
 
-| Mode | Description | Best For |
-|------|-------------|----------|
-| Timed Test | Fixed duration typing challenge | Speed improvement |
-| Random Words | Type randomly selected words | Accuracy practice |
-| Quotes | Type famous quotes and sayings | Engaging practice |
-| Paragraphs | Type longer text passages | Endurance building |
-| Lessons | Structured learning content | Skill development |
+| Mode         | Description                     | Best For           |
+| ------------ | ------------------------------- | ------------------ |
+| Timed Test   | Fixed duration typing challenge | Speed improvement  |
+| Random Words | Type randomly selected words    | Accuracy practice  |
+| Quotes       | Type famous quotes and sayings  | Engaging practice  |
+| Paragraphs   | Type longer text passages       | Endurance building |
+| Lessons      | Structured learning content     | Skill development  |
 
 ## 📁 File Structure
 
@@ -173,11 +173,11 @@ TypeFast.cmd tracks comprehensive typing statistics:
 
 ## 🤝 Contributing
 
-We welcome contributions to TypeFast.cmd! Here's how you can help:
+I welcome contributions to TypeFast.cmd! Here's how you can help:
 
 ### Ways to Contribute
 - **🐛 Bug Reports**: Found an issue? Open a GitHub issue
-- **💡 Feature Requests**: Have an idea? We'd love to hear it
+- **💡 Feature Requests**: Have an idea? I'd love to hear it
 - **📝 Content**: Add new words, quotes, or lessons
 - **🔧 Code**: Submit pull requests for improvements
 - **📚 Documentation**: Help improve this README or add code comments
@@ -219,7 +219,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Thanks to all contributors who help improve TypeFast.cmd
 - Inspired by the need for accessible typing practice tools
 - Built with love for the typing community
 
