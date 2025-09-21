@@ -45,7 +45,7 @@
   - ANSI color support for enhanced visual experience
   - ESC key for quick menu return
 
-## 🛠️ InstallationM
+## 🛠️ Installation
 
 ### Prerequisites
 - Windows operating system
@@ -102,13 +102,13 @@
 
 ### Test Modes Guide
 
-| Mode         | Description                     | Best For           |
-| ------------ | ------------------------------- | ------------------ |
-| Timed Test   | Fixed duration typing challenge | Speed improvement  |
-| Random Words | Type randomly selected words    | Accuracy practice  |
-| Quotes       | Type famous quotes and sayings  | Engaging practice  |
-| Paragraphs   | Type longer text passages       | Endurance building |
-| Lessons      | Structured learning content     | Skill development  |
+| Mode | Description | Best For |
+|------|-------------|----------|
+| Timed Test | Fixed duration typing challenge | Speed improvement |
+| Random Words | Type randomly selected words | Accuracy practice |
+| Quotes | Type famous quotes and sayings | Engaging practice |
+| Paragraphs | Type longer text passages | Endurance building |
+| Lessons | Structured learning content | Skill development |
 
 ## 📁 File Structure
 
